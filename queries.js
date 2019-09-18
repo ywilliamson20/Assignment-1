@@ -7,7 +7,7 @@
 
 /* Connect to your database using mongoose - remember to keep your key secret*/
 
-mongoose.connect('mongodb+srv://ywill:loversday@soft-7r6ld.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect(config.db.uri);
 
 /* Fill out these functions using Mongoose queries*/
 //Check out - https://mongoosejs.com/docs/queries.html
@@ -20,7 +20,7 @@ var findLibraryWest = function() {
 
    Listing.find({name: 'Library West' }, function(err, query) {
         if (err) throw err;
-        console.log(JSON.stringify(query));
+        console.log(JSON.stringify(query, null, 1));
 
     });
 };
@@ -30,9 +30,12 @@ var removeCable = function() {
     on cable TV. Since we live in the 21st century and most courses are now web based, go ahead
     and remove this listing from your database and log the document to the console.
    */
-
-   Listing.deleteOne({ code: 'CABL' }, function (err) {
+   Listing.find({ code: 'CABL' }, function (err, result) {
+       if (err) throw err;
+       console.log(JSON.stringify(result, null, 1));
+     Listing.deleteOne({ code: 'CABL' }, function (err) {
       if (err) return handleError(err);
+      });
     });
 
 };
@@ -50,7 +53,7 @@ Listing.updateOne({name: 'Phelps Laboratory' },{address: '1953 Museum Rd, Gaines
      Listing.find({name: 'Phelps Laboratory'}, function(err, up) {
           if (err) throw err;
 
-          console.log(JSON.stringify(up));
+          console.log(JSON.stringify(up, null, 1));
       });
 
  });
@@ -65,7 +68,7 @@ var retrieveAllListings = function() {
    Listing.find({}, function(err, lists) {
         if (err) throw err;
 
-        console.log(JSON.stringify(lists));
+        console.log(JSON.stringify(lists,null, 1));
     });
 };
 

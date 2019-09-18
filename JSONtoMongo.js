@@ -20,7 +20,7 @@ var fs = require('fs'),
 
   Remember that we needed to read in a file like we did in Bootcamp Assignment #1.
  */
- mongoose.connect('mongodb+srv://ywill:loversday@soft-7r6ld.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+ mongoose.connect(config.db.uri);
 var listingData;
 
  fs.readFile('listings.json', 'utf8', function(err, data) {
@@ -29,7 +29,6 @@ var listingData;
    //Save the sate in the listingData variable already defined
     listingData=JSON.parse(data);
     listingData.entries.forEach(function(entry){
-      //console.log('got it');
       var ent = new Listing(entry);
       ent.save(function (err, listing) {
      if (err) throw err;
